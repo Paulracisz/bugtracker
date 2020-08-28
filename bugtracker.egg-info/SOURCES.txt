@@ -1,0 +1,12 @@
+README.md
+setup.py
+bugtracker/__init__.py
+bugtracker/asgi.py
+bugtracker/settings.py
+bugtracker/urls.py
+bugtracker/wsgi.py
+bugtracker.egg-info/PKG-INFO
+bugtracker.egg-info/SOURCES.txt
+bugtracker.egg-info/dependency_links.txt
+bugtracker.egg-info/requires.txt
+bugtracker.egg-info/top_level.txt

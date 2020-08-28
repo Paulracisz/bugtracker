@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.http import HttpResponseForbidden
-from ticket.forms import LogInForm, AddUserForm, AddTicketForm, EditTicketForm, AssignTicketForm
+from ticket.forms import LogInForm, AddTicketForm, EditTicketForm, AssignTicketForm
 from django.contrib.auth import login, logout, authenticate
 from ticket.models import MyUser, MyTicket
 
@@ -13,7 +13,17 @@ from ticket.models import MyUser, MyTicket
 @login_required
 def index(request):
     tickets = MyTicket.objects.all()
-    return render(request,"index.html", {"tickets": tickets})
+    tickets_completed = tickets.filter(status='CM')
+    tickets_invalid = tickets.filter(status='IV')
+    tickets_in_progress = tickets.filter(status='IP')
+    tickets_new = tickets.filter(status='NW')
+    return render(request,"index.html", 
+                  {"tickets": tickets, 
+                    "tickets_completed": tickets_completed,
+                    "tickets_invalid": tickets_invalid,
+                    "tickets_in_progress": tickets_in_progress,
+                    "tickets_new": tickets_new,
+                  })
 
 
 def login_view(request):
@@ -75,18 +85,34 @@ def user_detail(request, user_id):
 
 def assign_ticket(request, ticket_id):
     ticket = MyTicket.objects.get(id=ticket_id)
+    ticket.status = 'IP'
+    ticket.completed_by = None
     if request.method == "POST":
-        form = AssignTicketForm(request.post)
+        form = AssignTicketForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             ticket.ticket_assigned = data["ticket_assigned"]
-            ticket.status = 'IP'
-            ticket.completed_by = None
             ticket.save()
         return HttpResponseRedirect(reverse("ticketdetail", args=[ticket.id]))
     data = {
         "ticket_assigned": ticket.ticket_assigned,
     }
-    form = AssignTicketForm()
-    return render(request, "assign_ticket.html", {"form": form})
+    form = AssignTicketForm(initial=data)
+    return render(request, "generic_form.html", {"form": form})
+
+def complete_ticket(request, ticket_id):
+    ticket = MyTicket.objects.get(id=ticket_id)
+    ticket.status = 'CM'
+    ticket.completed_by = ticket.ticket_assigned
+    ticket.ticket_assigned = None
+    ticket.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def invalid_ticket(request, ticket_id):
+    ticket = MyTicket.objects.get(id=ticket_id)
+    ticket.status = 'IV'
+    ticket.ticket_assigned = None
+    ticket.completed_by = None
+    ticket.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

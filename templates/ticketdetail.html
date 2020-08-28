@@ -13,15 +13,15 @@ Ticket Assigned To
 {{ticket.ticket_assigned}}
 <br/>
 Ticket Created By
-<a href="/userdetail/{{user.id}}">{{ticket.ticket_by}}</a>
+<a href="/userdetail/{{ticket.ticket_by.id}}/">{{ticket.ticket_by}}</a>
 <br />
 Ticket Completed By
 {{ticket.completed_by}}
 <br />
-<a href="/edit_ticket/{{ticket.id}}">Edit this ticket </a>
+<a href="/edit_ticket/{{ticket.id}}/">Edit this ticket </a>
 <br />
-<a href="/assign_ticket/{{ticket.id}}">Assign this ticket </a>
+<a href="/assign_ticket/{{ticket.id}}/">Assign this ticket </a>
 <br />
-<a > Complete this ticker </a>
+<a href="/complete/{{ticket.id}}/"> Complete this ticket </a>
 <br/>
-<a > Mark ticket as invalid </a>
+<a href="/invalid/{{ticket.id}}/"> Mark ticket as invalid </a>
