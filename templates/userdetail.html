@@ -1,0 +1,41 @@
+
+<h2>{{user}}'s tickets</h2>
+
+<h2> Tickets Authored </h2>
+{%for ticket in tickets%}
+<p>
+{{ticket.title}}
+<br/>
+{{ticket.description}}
+<br />
+This Ticket Was Made On
+<br />
+{{ticket.time_created}}
+<br/>
+Ticket Status
+{{ticket.status}}
+<br/>
+</p>
+<br/>
+
+{% endfor %}
+
+<h2>Tickets {{user}} has been Assigned</h2>
+<br/>
+{%for ticket in tickets_assigned%}
+{{ticket.title}}
+<br/>
+{{ticket.description}}
+<br/>
+<br/>
+{%endfor%}
+
+<h2>Tickets {{user}} has Completed</h2>
+<br/>
+{%for ticket in completed%}
+{{ticket.title}}
+<br/>
+{{ticket.description}}
+<br/>
+<br/>
+{%endfor%}

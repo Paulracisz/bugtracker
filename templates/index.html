@@ -1,0 +1,14 @@
+<h2>Welcome </h2>
+<br />
+<a href="/logout/"><button>Logout</button></a>
+<br />
+<a href="/new_ticket/"><button>Make A New Ticket</button></a>
+
+<br/>
+<h2> Tickets </h2>
+<br/>
+
+{%for ticket in tickets%}
+    <a href="/ticketdetail/{{ticket.id}}"> {{ticket.title}} </a>
+    <br/>
+{%endfor%}

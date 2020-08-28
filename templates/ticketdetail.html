@@ -1,0 +1,27 @@
+{{ticket.title}}
+<br/>
+{{ticket.description}}
+<br />
+This Ticket Was Made On
+<br />
+{{ticket.time_created}}
+<br/>
+Ticket Status
+{{ticket.status}}
+<br/>
+Ticket Assigned To 
+{{ticket.ticket_assigned}}
+<br/>
+Ticket Created By
+<a href="/userdetail/{{user.id}}">{{ticket.ticket_by}}</a>
+<br />
+Ticket Completed By
+{{ticket.completed_by}}
+<br />
+<a href="/edit_ticket/{{ticket.id}}">Edit this ticket </a>
+<br />
+<a href="/assign_ticket/{{ticket.id}}">Assign this ticket </a>
+<br />
+<a > Complete this ticker </a>
+<br/>
+<a > Mark ticket as invalid </a>
